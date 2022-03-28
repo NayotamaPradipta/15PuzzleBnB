@@ -16,4 +16,5 @@ Repositori ini berisi program Java untuk menyelesaikan persoalan 15-Puzzle denga
 ### Data Uji
 Data yang diujikan berupa 5 buah instansiasi persoalan 15-puzzle, dengan 2 kasus tidak dapat diselesaikan dan 3 kasus dapat diselesaikan. 
 <hr>
-### Made with :heart_on_fire: Nayotama Pradipta - 13520089
+
+### Made with :heart_on_fire: by Nayotama Pradipta - 13520089
