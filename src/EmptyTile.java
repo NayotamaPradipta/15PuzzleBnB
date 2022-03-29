@@ -3,7 +3,7 @@ public class EmptyTile extends Tile {
 
     public EmptyTile() {
         super();
-        this.num = 0;
+        this.num = 16;
     }
 
     public int getNum() {
