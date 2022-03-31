@@ -41,4 +41,14 @@ public class BranchAndBound {
         return this.condition;
     }
 
+
+    public void solve(){
+        
+        if (reachable){ 
+            // Algoritma Branch & Bound
+
+        } else {
+            System.out.println("Goal Unreachable!");
+        }
+    }
 }

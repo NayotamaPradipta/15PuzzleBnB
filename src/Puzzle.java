@@ -71,4 +71,52 @@ public class Puzzle {
     public int getBlankPosition(){
         return this.BlankPosition;
     }
+    public void setTile(Object t, int position){
+        if (t instanceof Tile){
+            this.tile[getRow(position)][getCol(position)] = (Tile) t;
+        }
+    }
+    public void up(){
+        if (getBlankPosition() > 4){
+            // Temp menyimpan nilai puzzle diatasnya 
+            int temp = getTile(getRow(getBlankPosition()) - 1, getCol(getBlankPosition())).getNum();
+            OccupiedTile ot = new OccupiedTile(temp);
+            EmptyTile et = new EmptyTile();
+            setTile(ot, getBlankPosition());
+            setTile(et, getBlankPosition() - 4);
+            this.BlankPosition = getBlankPosition() - 4;
+        }
+    }
+
+    public void down(){
+        if (getBlankPosition() < 13){
+            int temp = getTile(getRow(getBlankPosition()) + 1, getCol(getBlankPosition())).getNum();
+            OccupiedTile ot = new OccupiedTile(temp);
+            EmptyTile et = new EmptyTile();
+            setTile(ot, getBlankPosition());
+            setTile(et, getBlankPosition() + 4);
+            this.BlankPosition = getBlankPosition() + 4;
+
+        }
+    }
+    public void right(){
+        if (getBlankPosition() % 4 != 0){ // Bukan paling kanan
+            int temp = getTile(getRow(getBlankPosition()), getCol(getBlankPosition() + 1)).getNum();
+            OccupiedTile ot = new OccupiedTile(temp);
+            EmptyTile et = new EmptyTile();
+            setTile(ot, getBlankPosition());
+            setTile(et, getBlankPosition() + 1);
+            this.BlankPosition = getBlankPosition() + 1;
+        }
+    }
+    public void left(){
+        if (getBlankPosition() % 4 != 1){ // Bukan paling kiri
+            int temp = getTile(getRow(getBlankPosition()), getCol(getBlankPosition() - 1)).getNum();
+            OccupiedTile ot = new OccupiedTile(temp);
+            EmptyTile et = new EmptyTile();
+            setTile(ot, getBlankPosition());
+            setTile(et, getBlankPosition() - 1);
+            this.BlankPosition = getBlankPosition() - 1;
+        }
+    }
 }
