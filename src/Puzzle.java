@@ -76,31 +76,45 @@ public class Puzzle {
             this.tile[getRow(position)][getCol(position)] = (Tile) t;
         }
     }
+
+    public boolean isValidMove(String dir){
+        if (dir.equals("up")){
+            return (getBlankPosition() > 4);
+        } else if (dir.equals("down")){
+            return (getBlankPosition() < 13);
+        } else if (dir.equals("right")){
+            return (getBlankPosition() % 4 != 0);
+        } else {
+            return (getBlankPosition() % 4 != 1);
+        }
+    }
+
     public void up(){
-        if (getBlankPosition() > 4){
-            // Temp menyimpan nilai puzzle diatasnya 
+        // Temp menyimpan nilai puzzle diatasnya
+        if (isValidMove("up")){
             int temp = getTile(getRow(getBlankPosition()) - 1, getCol(getBlankPosition())).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
             setTile(ot, getBlankPosition());
             setTile(et, getBlankPosition() - 4);
             this.BlankPosition = getBlankPosition() - 4;
-        }
+        }   
+
     }
 
     public void down(){
-        if (getBlankPosition() < 13){
+        if (isValidMove("down")){
             int temp = getTile(getRow(getBlankPosition()) + 1, getCol(getBlankPosition())).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
             setTile(ot, getBlankPosition());
             setTile(et, getBlankPosition() + 4);
             this.BlankPosition = getBlankPosition() + 4;
-
         }
+
     }
     public void right(){
-        if (getBlankPosition() % 4 != 0){ // Bukan paling kanan
+        if (isValidMove("right")){
             int temp = getTile(getRow(getBlankPosition()), getCol(getBlankPosition() + 1)).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
@@ -108,9 +122,10 @@ public class Puzzle {
             setTile(et, getBlankPosition() + 1);
             this.BlankPosition = getBlankPosition() + 1;
         }
+
     }
     public void left(){
-        if (getBlankPosition() % 4 != 1){ // Bukan paling kiri
+        if (isValidMove("left")){
             int temp = getTile(getRow(getBlankPosition()), getCol(getBlankPosition() - 1)).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
@@ -118,5 +133,25 @@ public class Puzzle {
             setTile(et, getBlankPosition() - 1);
             this.BlankPosition = getBlankPosition() - 1;
         }
+
     }
+
+    public void printTiles(){
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (this.tile[i][j].getNum() < 10){
+                    System.out.print(this.tile[i][j].getNum() + "  ");
+                } else {
+                    if (this.tile[i][j].getNum() != 16){
+                        System.out.print(this.tile[i][j].getNum() + " ");
+                    } else {
+                        System.out.print("X  ");
+                    }
+                }
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+
 }
