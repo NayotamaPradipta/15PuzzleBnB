@@ -101,7 +101,7 @@ public class BranchAndBound {
             showPath();
         }
         System.out.print("Nilai fungsi Sigma Kurang[i] + X: ");
-        System.out.println(getX() + getCondition());
+        System.out.println(getCondition());
         System.out.print("Nodes generated: ");
         System.out.println(this.node);
         System.out.println("Execution time: " + ((stopTime - startTime) / 1000000) + " ms");
