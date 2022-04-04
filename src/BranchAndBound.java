@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 public class BranchAndBound {
@@ -19,18 +20,29 @@ public class BranchAndBound {
         }
         // Hitung total Kurang(i)
         int k = 1;
+        this.condition = 0;
+        int ctr[] = new int[16];
         while (k <= 16){
             int x = puzzle.getRow(k);
             int y = puzzle.getCol(k);
+            int temp = 0;
             for (int i = 0; i < 4; i++){
                 for (int j = 0; j < 4; j++){
-                    if ((puzzle.getTile(i, j).getNum() > puzzle.getTile(x, y).getNum()) && (puzzle.getTilePosition(i, j) < puzzle.getTilePosition(x, y))){
+                    if ((puzzle.getTile(i, j).getNum() < puzzle.getTile(x, y).getNum()) && (puzzle.getTilePosition(i, j) > puzzle.getTilePosition(x, y))){
                         this.condition += 1;
+                        temp +=1;
                     }
+                    
                 }
             }
+            ctr[puzzle.getTile(puzzle.getRow(k), puzzle.getCol(k)).getNum() - 1] = temp;
+            
             k += 1;
         }
+        for (int i = 0; i < 16; i++){
+            System.out.println("Kurang[" + (i+1) + "] : " + ctr[i]);
+        }
+        System.out.println("Total Kurang[i] : " + this.condition);
         this.condition += this.X;
         if (this.condition % 2 == 0){
             reachable = true;

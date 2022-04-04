@@ -1,10 +1,38 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
+import java.util.ArrayList;
+import java.util.Collections;
 public class Puzzle {
     private Tile[][] tile;
     private int BlankPosition;
+    public Puzzle(){
+        this.tile = new Tile[4][4];
+        ArrayList<Integer> x = new ArrayList<>();
+        for (int i = 0; i < 16; i++){
+            x.add(i+1);
+        }
+        Collections.shuffle(x);
+        int k = 0;
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (x.get(k) != 16){
+                    tile[i][j] = new OccupiedTile(x.get(k));
+                } else {
+                    tile[i][j] = new EmptyTile();
+                }
+                k++;
+            }
+        }
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (tile[i][j].getNum() == 16){
+                    BlankPosition = getTilePosition(i, j);
+                    break;
+                }
+            }
+        }
+    }
     public Puzzle(String filename) {
         readFileToPuzzle(filename);
         int i;
@@ -13,10 +41,12 @@ public class Puzzle {
             for (j = 0; j < 4; j++){
                 if (tile[i][j].getNum() == 16){
                     BlankPosition = getTilePosition(i, j);
+                    break;
                 }
             }
         }
     }
+
     public Puzzle(Puzzle copy){
         this.tile = new Tile[4][4];
         for (int i = 0; i < 4; i++){
