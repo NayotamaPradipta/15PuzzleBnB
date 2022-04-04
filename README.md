@@ -11,7 +11,7 @@ Repositori ini berisi program Java untuk menyelesaikan persoalan 15-Puzzle denga
 3. Jika dapat diselesaikan, program menampilkan urutan matriks rute (path) aksi yang dilakukan dari posisi awal ke susunan akhir. 
 4. Program menampilkan waktu eksekusi (diluar baca input/tulis output)
 5. Program menampilkan jumlah simpul yang dibangkiatkan di dalam pohon ruang status pencarian
-6. (Bonus) Program dapat menampilkan pergeseran ubin dengan Graphical User Interface (Tidak diiimplementasikan)
+6. (Bonus) Program dapat menampilkan pergeseran ubin dengan Graphical User Interface (Tidak diimplementasikan)
 
 ### Data Uji
 Data yang diujikan berupa 5 buah instansiasi persoalan 15-puzzle, dengan 2 kasus tidak dapat diselesaikan dan 3 kasus dapat diselesaikan. 
