@@ -2,7 +2,6 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
-    // Buat testing Tile Class beserta EmptyTile & OccupiedTile
     public static void main(String[] args) throws FileNotFoundException {
         // Read input 
         Scanner sc = new Scanner(System.in);

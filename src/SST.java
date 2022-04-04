@@ -50,13 +50,4 @@ public class SST {
     public int getCost(){
         return (BranchAndBound.misplaced(this.root) + this.depth);
     }
-    /*
-    @Override
-    public int compareTo(SST sst){
-        if (this.getCost() <= sst.getCost()){
-            return 1;
-        } else {
-            return -1;
-        }
-    } */
 }
