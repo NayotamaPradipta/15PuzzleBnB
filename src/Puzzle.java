@@ -17,7 +17,15 @@ public class Puzzle {
             }
         }
     }
-
+    public Puzzle(Puzzle copy){
+        this.tile = new Tile[4][4];
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                this.tile[i][j] = copy.tile[i][j];
+            }
+        }
+        this.BlankPosition = copy.BlankPosition;
+    }
     public Tile getTile(int i , int j){
         return this.tile[i][j];
     }
@@ -89,53 +97,89 @@ public class Puzzle {
         }
     }
 
-    public void up(){
-        // Temp menyimpan nilai puzzle diatasnya
+    public Puzzle up(){
+        // Temp menyimpan nilai tile diatasnya
         if (isValidMove("up")){
+            Puzzle child = (Puzzle)this;
             int temp = getTile(getRow(getBlankPosition()) - 1, getCol(getBlankPosition())).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
-            setTile(ot, getBlankPosition());
-            setTile(et, getBlankPosition() - 4);
-            this.BlankPosition = getBlankPosition() - 4;
-        }   
+            child.setTile(ot, getBlankPosition());
+            child.setTile(et, getBlankPosition() - 4);
+            child.BlankPosition = getBlankPosition() - 4;
+            return child;
+        } else {
+            return this;
+        }
 
     }
 
-    public void down(){
+    public Puzzle down(){
         if (isValidMove("down")){
+            Puzzle child = (Puzzle)this;
             int temp = getTile(getRow(getBlankPosition()) + 1, getCol(getBlankPosition())).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
-            setTile(ot, getBlankPosition());
-            setTile(et, getBlankPosition() + 4);
-            this.BlankPosition = getBlankPosition() + 4;
+            child.setTile(ot, getBlankPosition());
+            child.setTile(et, getBlankPosition() + 4);
+            child.BlankPosition = getBlankPosition() + 4;
+            return child;
+        } else {
+            return this;
         }
 
     }
-    public void right(){
+    public Puzzle right(){
         if (isValidMove("right")){
+            Puzzle child = (Puzzle)this;
             int temp = getTile(getRow(getBlankPosition()), getCol(getBlankPosition() + 1)).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
-            setTile(ot, getBlankPosition());
-            setTile(et, getBlankPosition() + 1);
-            this.BlankPosition = getBlankPosition() + 1;
+            child.setTile(ot, getBlankPosition());
+            child.setTile(et, getBlankPosition() + 1);
+            child.BlankPosition = getBlankPosition() + 1;
+            return child;
+        } else {
+            return this;
         }
 
     }
-    public void left(){
+    public Puzzle left(){
         if (isValidMove("left")){
+            Puzzle child = (Puzzle)this;
             int temp = getTile(getRow(getBlankPosition()), getCol(getBlankPosition() - 1)).getNum();
             OccupiedTile ot = new OccupiedTile(temp);
             EmptyTile et = new EmptyTile();
-            setTile(ot, getBlankPosition());
-            setTile(et, getBlankPosition() - 1);
-            this.BlankPosition = getBlankPosition() - 1;
+            child.setTile(ot, getBlankPosition());
+            child.setTile(et, getBlankPosition() - 1);
+            child.BlankPosition = getBlankPosition() - 1;
+            return child;
+        } else {
+            return this;
         }
 
     }
-
+    public Puzzle moveByString(String dir){
+        if (dir.equals("up")){
+            return up();
+        } else if (dir.equals("down")){
+            return down();
+        } else if (dir.equals("right")){
+            return right();
+        } else {
+            return left();
+        }
+    }
+    public boolean isFinalState(){
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (this.tile[i][j].getNum() != getTilePosition(i, j)){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public void printTiles(){
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 4; j++){
