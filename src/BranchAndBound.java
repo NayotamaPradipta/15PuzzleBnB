@@ -1,8 +1,15 @@
+import java.util.List;
+import java.util.PriorityQueue;
 public class BranchAndBound {
     private boolean reachable;
     private int X;
     private int condition;
+    private SST solution;
+    private String[] posmove;
+    private int node;
+    private List<SST> path;
     public BranchAndBound(Puzzle puzzle){
+        posmove = new String[]{"up", "down", "right", "left"};
         // Pertama cek apakah goal dapat dicapai menggunakan Teorema pada pdf
         // Ambil nilai X
         if ((puzzle.getRow(puzzle.getBlankPosition()) + puzzle.getCol(puzzle.getBlankPosition())) % 2 == 1){
@@ -42,13 +49,69 @@ public class BranchAndBound {
     }
 
 
-    public void solve(){
-        
+    public static int misplaced(Puzzle puzzle){
+        int ctr = 0;
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (puzzle.getTile(i, j).getNum() != puzzle.getTilePosition(i, j) && puzzle.getTile(i, j).getNum() != 16){
+                    ctr += 1;
+                }
+            }
+        }
+        return ctr;
+    }
+    // Buat Priority Queue
+
+    public void solve(Puzzle puzzle){
+        long startTime = System.nanoTime();
         if (reachable){ 
             // Algoritma Branch & Bound
-
+            SST root = new SST(puzzle);
+            PriorityQueue<SST> pqbnb = new PriorityQueue<SST>((m,n) -> m.getCost() - n.getCost());
+            
+            pqbnb.add(root);
+            this.node = 1;
+            while (!pqbnb.isEmpty()){
+                SST curr = pqbnb.poll();
+                if (curr.root.isFinalState()){
+                    this.solution = curr;
+                    break;
+                } else {
+                    for (int i = 0; i < 4; i++){
+                        if (!curr.isRepetitive(posmove[i])){
+                            Puzzle temp = new Puzzle(curr.root);
+                            SST child = new SST(temp.moveByString(this.posmove[i]), curr, this.posmove[i], curr.depth + 1);
+                            if (child.root.getBlankPosition() != curr.root.getBlankPosition() && child.root != null){
+                                this.node += 1;
+                                pqbnb.add(child);
+                            }
+                            
+                        }
+                    }
+                }
+            }
+            
+            this.path = this.solution.getPath();
+            System.out.println("Steps taken: " + this.path.size());
         } else {
             System.out.println("Goal Unreachable!");
+        }
+        long stopTime = System.nanoTime();
+        if (reachable){
+            showPath();
+        }
+        System.out.print("Nilai fungsi Sigma Kurang[i] + X: ");
+        System.out.println(getX() + getCondition());
+        System.out.print("Nodes generated: ");
+        System.out.println(this.node);
+        System.out.println("Execution time: " + ((stopTime - startTime) / 1000000) + " ms");
+
+        
+    }
+    public void showPath(){
+        for (int i = 0; i < this.path.size();i++){
+            System.out.println("Step " + (i+1) + ": " + this.path.get(i).move);
+            this.path.get(i).root.printTiles();
         }
     }
 }
